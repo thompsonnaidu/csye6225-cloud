@@ -32,13 +32,16 @@ db.users= userModel(sequelize,DataTypes)
 
 db.assignments= assignmentModel(sequelize,DataTypes)
 
+db.users.hasMany(db.assignments,{foreignKey:{name :"createdBy"},onDelete:"CASCADE",field:"id",allowNull:false})
+db.users.hasMany(db.assignments,{foreignKey:{name :"updatedBy"},onDelete:"CASCADE",field:"id",allowNull:false})
 //ensure that the created date is never updated 
 db.users.beforeUpdate((instance,option)=>{
     delete instance.dataValues.account_created;
     instance.dataValues.account_updated= Sequelize.literal('CURRENT_TIMESTAMP');
 
 });
-db.sequelize.sync({force:true}).then(()=> {
+
+db.sequelize.sync({force:false,alter:false}).then(()=> {
 
     const userCSVFile=new URL('./users.csv', import.meta.url);
     fs.createReadStream(userCSVFile)
@@ -48,7 +51,8 @@ db.sequelize.sync({force:true}).then(()=> {
             const userInfo={...data};
             const salt = await bcrypt.genSalt(10);
             userInfo.password= await bcrypt.hash(data.password,salt);
-            console.log(userInfo);
+
+            //performing an upsert to check if the user is already in the database
             db.users.upsert(userInfo); 
         }); 
 }).catch(err=>console.log("error resync app",err));

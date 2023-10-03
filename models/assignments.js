@@ -26,7 +26,7 @@ export default (sequelize, DataTypes) => {
             allowNull: false,
             validator:{
                 min:1,
-                max:100
+                max:3
             }
 
         },
@@ -34,14 +34,6 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.DATE,
             allowNull: false,
 
-        },
-        createdBy:{
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        updatedBy:{
-            type: DataTypes.STRING,
-            allowNull: false,
         }
     }, {
         timestamps: true,
