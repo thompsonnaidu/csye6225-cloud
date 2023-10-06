@@ -23,13 +23,11 @@ describe('API Tests', () => {
        
        done();
      
-       
+       process.exit(0);
      });
     } catch (error) {
         console.error("this is the error message",error);
-        
-    }finally{
-        process.exit(0);
+        process.exit(1);   
     }
   });
 
