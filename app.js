@@ -18,3 +18,7 @@ app.listen(PORT,(err)=>{
         console.log("Application running on port number ",PORT);
     }
 })
+
+
+
+export default app;
