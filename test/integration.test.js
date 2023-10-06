@@ -23,13 +23,37 @@ describe('API Tests', () => {
        
        done();
      
-       process.exit(0);
+    //    process.exit(0);
      });
     } catch (error) {
         console.error("this is the error message",error);
-        process.exit(1);   
+     
     }
   });
 
+  
+
+  it('Check if the get assignment API route is working',  (done) => {
+    try {
+        
+     chai.request(app)
+     
+     .get('/v1/assignments') // Replace with the actual endpoint you want to test
+     .end((err, res) => {
+       expect(err).to.be.null;
+       expect(res).to.have.status(200);
+       
+       done();
+     });
+    } catch (error) {
+        console.error("this is the error message",error);
+    }
+  });
+
+
+  after(()=>{
+    process.exit(0);
+  })
+  
   // Add more test cases as needed
 });
