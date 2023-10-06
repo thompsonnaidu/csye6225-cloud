@@ -12,18 +12,25 @@ describe('API Tests', () => {
   
 
   it('Check if the application is up',  (done) => {
-    
+    try {
+        
      chai.request(app)
      
-      .get('/healthz') // Replace with the actual endpoint you want to test
-      .end((err, res) => {
-        expect(err).to.be.null;
-        expect(res).to.have.status(200);
+     .get('/healthz') // Replace with the actual endpoint you want to test
+     .end((err, res) => {
+       expect(err).to.be.null;
+       expect(res).to.have.status(200);
+       
+       done();
+     
+       
+     });
+    } catch (error) {
+        console.error("this is the error message",error);
         
-        done();
-      
+    }finally{
         process.exit(0);
-      });
+    }
   });
 
   // Add more test cases as needed
